@@ -1,0 +1,52 @@
+---
+description: Code style conventions (project-wide)
+alwaysApply: true
+---
+
+# Code Style Conventions
+
+This rule defines the default coding style for this repo. If another rule in `.cursor/rules/` is stricter, follow the stricter rule.
+
+## TypeScript
+
+- Prefer **explicit types** at module boundaries (public functions, exported values).
+- Avoid `any` and `@ts-ignore` (use proper types or safe narrowing).
+- Prefer `unknown` over `any` when you must accept untyped input.
+- Keep types close to usage; avoid over-abstracting.
+
+## Exports & imports
+
+- Prefer **named exports** over default exports.
+- Avoid "barrel" re-exports (e.g. `index.ts` that re-exports many modules) unless there's an established pattern in that area.
+- Use package imports (e.g. `@excalidraw/*`) and local relative imports; avoid `src/*`-style pseudo-roots unless the repo actually defines them.
+
+## React (when applicable)
+
+- Prefer **functional components + hooks**.
+- Props interface naming: `{ComponentName}Props`.
+- Avoid inline styles; prefer className / existing styling patterns.
+- Use refs instead of `document.getElementById`.
+
+## Code organization
+
+- Keep functions small and readable; avoid deep nesting (target ≤ 3 levels).
+- Extract helpers when logic is reused or when a function becomes hard to scan.
+- Prefer descriptive names over comments; avoid redundant narration comments.
+
+## Formatting
+
+- Keep formatting consistent with the repo (Prettier).
+- Prefer early returns to reduce indentation.
+- Keep diffs minimal; don't reformat unrelated code.
+
+## Safety
+
+- Don't add new npm dependencies without explicit approval.
+- If touching core architecture areas, follow the "protected files" rule and run the full test suite + manual QA.
+
+## How to verify
+
+1. `yarn test:code` — ESLint passes with zero warnings.
+2. `yarn test:other` — Prettier check passes.
+3. `rg -n "export default" <changed-files>` — should be zero (prefer named exports).
+4. `rg -n ": any" <changed-files>` — should be zero.

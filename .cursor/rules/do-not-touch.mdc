@@ -1,0 +1,22 @@
+---
+description: "Protected files that should not be modified"
+alwaysApply: true
+---
+# Protected Files (Do Not Touch)
+
+## Critical files — NEVER modify without explicit approval:
+- `packages/excalidraw/scene/Renderer.ts` — canvas render pipeline
+- `packages/excalidraw/data/restore.ts` — file format compatibility
+- `packages/excalidraw/actions/manager.tsx` — action dispatch system
+- `packages/excalidraw/types.ts` — core type definitions
+
+## Why
+These files have complex interdependencies.
+Changes here affect the entire application.
+Any modification requires full test suite run + manual QA.
+
+## How to verify
+
+1. `git diff --name-only` — confirm none of the protected files appear in the diff.
+2. If a protected file was changed: run `yarn test:all` and verify zero failures.
+3. Manual QA: open the app (`yarn start`), test drawing, undo/redo, and file import/export.

@@ -1,0 +1,28 @@
+---
+description: API-specific rules for this repo
+globs: "{excalidraw-app/data/**,excalidraw-app/collab/**,packages/excalidraw/data/**}"
+alwaysApply: false
+---
+
+# API Module Conventions
+
+## Scope
+
+This rule applies to API/persistence/collaboration modules, primarily:
+
+- `excalidraw-app/data/**`
+- `excalidraw-app/collab/**`
+- `packages/excalidraw/data/**`
+
+## Guidelines
+
+- Keep API modules small and focused (one feature/area per module).
+- Prefer typed request/response shapes (no `any`, no `@ts-ignore`).
+- Centralize shared API utilities (error mapping, retries, headers) instead of duplicating logic.
+- Avoid adding new dependencies for API work without explicit approval.
+
+## How to verify
+
+1. `rg -n ": any" <changed-files>` — zero results in API modules.
+2. Confirm no duplicate fetch/request logic — reuse existing helpers in `excalidraw-app/data/`.
+3. `yarn test:typecheck` passes after changes to data/collab modules.

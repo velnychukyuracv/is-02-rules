@@ -1,0 +1,22 @@
+# Architecture: State Management
+
+## Context
+This project uses a custom state management pattern,
+NOT Redux, MobX, or Zustand.
+
+## Rule
+- State lives in `appState` object (`packages/excalidraw/types.ts`).
+- State updates **ONLY** through `actionManager` dispatch.
+- **NEVER** mutate state directly.
+- Components access state via props, **not** global imports.
+
+## How to verify
+1. Search for direct state mutations — should find zero results.
+2. All state changes go through `actionManager` dispatch.
+3. No Redux/MobX/Zustand imports exist.
+
+Suggested checks (for the agent to run):
+
+- `rg -n "dispatch\\(|actionManager" .`
+- `rg -n "setState\\(|useState\\(|mutate|mutation" packages/excalidraw appState`
+- `rg -n "redux|mobx|zustand" packages/excalidraw`

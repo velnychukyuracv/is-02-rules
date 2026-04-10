@@ -1,0 +1,18 @@
+---
+description: "React component conventions for Excalidraw"
+globs: "packages/excalidraw/components/**/*.tsx"
+alwaysApply: false
+---
+
+# Component Conventions
+
+- Use functional components with hooks
+- Props interface: `ComponentNameProps`
+- Export: named, not default
+- Tests: colocated `ComponentName.test.tsx`
+
+## How to verify
+
+1. `rg -n "export default" <changed-component>` — should return zero results.
+2. `rg -n "class .* extends.*Component" <changed-component>` — should return zero results.
+3. Confirm a `*.test.tsx` exists alongside the new/changed component.

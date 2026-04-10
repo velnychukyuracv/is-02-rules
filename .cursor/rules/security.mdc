@@ -1,0 +1,35 @@
+---
+description: Security rules for this repo
+alwaysApply: true
+---
+
+# Security Rules
+
+## Secrets & credentials
+
+- NEVER commit `.env*`, API keys, tokens, passwords, or Firebase config overrides to git.
+- Put personal/local credentials in `.env.local` or `.env.development.local` (gitignored).
+- If you see a secret in code, flag it immediately — do not proceed.
+
+## User data
+
+- Collaboration data is end-to-end encrypted. Do not weaken or bypass encryption in `excalidraw-app/collab/`.
+- Do not log or expose user scene data, file contents, or room keys to console in production builds.
+
+## Dependencies
+
+- Do not add new npm packages without explicit approval.
+- Before using a new dependency, check for known vulnerabilities (`yarn audit` or equivalent).
+- Prefer well-maintained packages with active security patching.
+
+## Input handling
+
+- Sanitize URLs before rendering (the project already uses `@braintree/sanitize-url`; use it).
+- Do not use `dangerouslySetInnerHTML` or `eval()`.
+- Validate imported `.excalidraw` JSON before restoring (restore.ts handles this — do not bypass it).
+
+## How to verify
+
+1. `rg -in "api.key|secret|token|password" --glob "!.env*" --glob "!node_modules" --glob "!yarn.lock"` — should return zero real secrets.
+2. `rg -n "dangerouslySetInnerHTML|eval(" packages/ excalidraw-app/` — should return zero results (or only safe/approved usages).
+3. Confirm `.env.local` and `.env.development.local` are in `.gitignore`.

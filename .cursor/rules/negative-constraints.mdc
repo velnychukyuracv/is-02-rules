@@ -1,0 +1,32 @@
+---
+description: Negative constraints (things to avoid)
+alwaysApply: true
+---
+
+# Negative Constraints
+
+## NEVER
+
+- NEVER use `document.getElementById` — use React refs
+- NEVER import from `src/` — use package imports
+- NEVER add inline styles — use CSS modules or className
+
+## DO NOT
+
+- DO NOT suggest class components — only functional + hooks
+- DO NOT suggest `any` type — always provide proper types
+- DO NOT modify test snapshots manually — regenerate them
+
+## AVOID
+
+- AVOID deep nesting (max 3 levels)
+- AVOID barrel exports (index.ts re-exports)
+- AVOID default exports — use named exports
+
+## How to verify
+
+1. `rg -n "document\.getElementById" <changed-files>` — zero results.
+2. `rg -n "from ['\"]src/" <changed-files>` — zero results.
+3. `rg -n ": any" <changed-files>` — zero results.
+4. `rg -n "export default" <changed-files>` — zero results.
+5. `rg -n "style=" <changed-files>` — zero inline styles in JSX.

@@ -1,0 +1,40 @@
+---
+description: Test conventions for this repo (Vitest + jsdom)
+alwaysApply: true
+---
+
+# Testing Conventions
+
+## Test runner & environment
+
+- Use **Vitest** (repo scripts: `yarn test`, `yarn test:all`, `yarn test:coverage`).
+- Tests run in **jsdom** with shared setup from `setupTests.ts`.
+- Prefer existing helpers/mocks under `packages/excalidraw/tests/helpers/` before adding new ones.
+
+## File naming & location
+
+- Prefer colocated tests near the code under test:
+  - `Thing.tsx` → `Thing.test.tsx`
+  - `thing.ts` → `thing.test.ts`
+- Avoid creating new top-level "test utilities" unless reused broadly.
+
+## Snapshots
+
+- **Do not edit snapshots manually**.
+- If a change is intentional, regenerate via `yarn test:update` (or the appropriate Vitest snapshot update workflow).
+
+## What to test
+
+- Verify behavior and user-facing outcomes, not internal implementation details.
+- For rendering/canvas-adjacent logic, prefer deterministic unit tests (pure functions, geometry, serialization) over brittle pixel assertions.
+
+## Code quality in tests
+
+- No `any` and no `@ts-ignore` in test code.
+- Keep tests readable: arrange/act/assert, minimal nesting, descriptive test names.
+
+## How to verify
+
+1. `yarn test` — all tests pass.
+2. `yarn test:coverage` — coverage meets thresholds (lines 60%, branches 70%, functions 63%, statements 60%).
+3. New/changed code has a colocated `.test.ts` or `.test.tsx` file.

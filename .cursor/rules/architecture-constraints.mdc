@@ -1,0 +1,27 @@
+---
+description: Architecture constraints (state, rendering, dependencies)
+alwaysApply: true
+---
+
+# Architecture Constraints
+
+## State Management
+- This project uses CUSTOM state management
+- DO NOT suggest: Redux, MobX, Zustand, Jotai, Recoil
+- State updates: ONLY through actionManager.dispatch()
+- State type: AppState (see types.ts)
+
+## Rendering
+- Canvas rendering via custom engine, NOT React DOM
+- DO NOT suggest: react-konva, fabric.js, pixi.js
+- Render pipeline: Scene → renderScene() → canvas 2D context
+
+## Dependencies
+- DO NOT add new npm dependencies without explicit approval
+- Check existing utils before suggesting external packages
+
+## How to verify
+
+1. `rg -in "from.*redux|from.*mobx|from.*zustand|from.*recoil" packages/ excalidraw-app/` — zero results expected.
+2. `rg -in "react-konva|fabric|pixi" packages/` — zero results expected.
+3. Review any new `import` in the diff for unapproved packages.

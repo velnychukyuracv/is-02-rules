@@ -1,0 +1,30 @@
+---
+description: "Architecture constraints for the project"
+globs: "packages/**"
+alwaysApply: false
+---
+
+# Project Architecture
+
+## State Management
+
+- Custom state via actionManager — NOT Redux/Zustand/MobX/Jotai/Recoil
+- State updates: actionManager.executeAction() ONLY
+- State type: AppState (packages/excalidraw/types.ts)
+
+## Rendering
+
+- Canvas 2D rendering — NOT React DOM for drawing
+- Render pipeline: Scene → renderScene() → canvas context
+- DO NOT use react-konva, fabric.js, pixi.js
+
+## Dependencies
+
+- No new npm packages without explicit approval
+- Check packages/excalidraw/utils/ and packages/common/ before adding external helpers
+
+## How to verify
+
+1. `rg -n "redux|mobx|zustand|recoil" packages/` — should return zero imports.
+2. `rg -n "react-konva|fabric\.js|pixi\.js" packages/` — should return zero imports.
+3. Confirm state updates go through actionManager, not direct mutation.

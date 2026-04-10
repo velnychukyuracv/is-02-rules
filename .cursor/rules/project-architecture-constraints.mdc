@@ -1,0 +1,21 @@
+---
+description: "Architecture constraints for the project"
+alwaysApply: false
+---
+# Project Architecture
+## State Management
+- Custom state via actionManager — NOT Redux/Zustand/MobX
+- State updates: actionManager.dispatch() ONLY
+- State type: AppState (packages/excalidraw/types.ts)
+## Rendering
+- Canvas 2D rendering — NOT React DOM for drawing
+- Render pipeline: Scene → renderScene() → canvas context
+- DO NOT use react-konva, fabric.js, pixi.js
+## Dependencies
+- No new npm packages without explicit approval
+
+## How to verify
+
+1. `rg -in "redux|zustand|mobx" packages/` — zero results.
+2. `rg -in "react-konva|fabric|pixi" packages/` — zero results.
+3. Check diffs for any new entries in `package.json` dependencies.

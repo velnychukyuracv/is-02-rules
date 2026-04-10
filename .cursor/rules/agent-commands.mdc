@@ -1,0 +1,47 @@
+---
+description: Repo playbook + commands for the AI agent
+alwaysApply: true
+---
+
+# AI Agent Playbook (Excalidraw monorepo)
+
+Primary command menu lives in `.cursor/commands/COMMANDS.md` (keep this rule short and stable).
+
+## Default workflow commands
+
+- **Install**: Prefer `yarn` (repo uses `yarn@1.22.22`).
+  - `yarn install`
+  - If install issues: `yarn clean-install`
+- **Dev (app)**: `yarn start` (runs `./excalidraw-app start`)
+- **Build (app)**: `yarn build`
+- **Build (packages)**: `yarn build:packages`
+- **Tests**:
+  - App/unit: `yarn test` (vitest)
+  - Full suite: `yarn test:all`
+  - Typecheck: `yarn test:typecheck`
+  - Lint: `yarn test:code`
+  - Prettier check: `yarn test:other`
+- **Auto-fix**:
+  - Prettier write: `yarn fix:other`
+  - ESLint fix: `yarn fix:code`
+  - Both: `yarn fix`
+
+## Repo navigation hints
+
+- **App**: `excalidraw-app/`
+- **Packages**: `packages/*`
+- **Examples**: `examples/*`
+- **Scripts**: `scripts/`
+- **Docs**: `dev-docs/` and root `README.md`
+
+## Safety & hygiene rules
+
+- **No secrets**: never commit `.env*`, keys, tokens, credentials.
+- **No destructive git**: avoid force-push / hard reset unless explicitly requested.
+- **Prefer minimal diffs**: keep changes scoped to the user’s request; don’t reformat unrelated files.
+- **Respect tooling**: keep `yarn.lock` consistent with changes; only change dependencies when needed.
+
+## How to respond (style)
+
+- Ask only when blocked; otherwise make reasonable defaults and proceed.
+- When adding new code, also add/update the nearest tests if the repo already has tests for that area.
